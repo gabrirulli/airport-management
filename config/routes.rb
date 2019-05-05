@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     post "registration", to: "registration#create"
+    post "login", to: "sessions#create"
   end
 end
