@@ -9,11 +9,11 @@ class Api::RegistrationController < ApiController
         if status.success?
           render json: user, serializer: UserSerializer, status: :ok
         else
-          render json: { errors: "Authentication failed, try call '/session' endpoint" }, status: 401
+          render json: { errors: 'Authentication failed, try call "/login" endpoint' }, status: 401
         end
       end
     else
-      render json: {errors: user.errors }, status: 400
+      render json: { errors: user.errors }, status: 400
     end
   end
 

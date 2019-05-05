@@ -6,7 +6,7 @@ class Flight < ApplicationRecord
   validates :code, :departure, :destination, presence: true
   validates :code, uniqueness: { case_sensitive: false }
 
-  before_save :save_duration
+  after_save :save_duration
 
   # Return duration formatted in hours and minutes
   def formatted_duration
@@ -24,6 +24,8 @@ class Flight < ApplicationRecord
     departure = executions.first.departure_date_time
     arrival = executions.last.arrival_date_time
 
-    self.duration = (arrival - departure)/60
+    duration = (arrival - departure) / 60
+    # update_column skip validations so this method will be not called more than once
+    self.update_column(:duration, duration)
   end
 end

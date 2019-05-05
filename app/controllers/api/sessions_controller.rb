@@ -6,7 +6,7 @@ class Api::SessionsController < Clearance::SessionsController
       if status.success?
         render json: user, serializer: UserSerializer, status: :ok
       else
-        render json: { errors: "Authentication failed, email or password are incorrect" }, status: 401
+        render json: { errors: 'Authentication failed, email or password are incorrect' }, status: 401
       end
     end
   end
