@@ -10,8 +10,9 @@ class Api::FlightBookingsController < ApiController
   end
 
   def create
-    if current_user.id != params[:user_id]
-      render json: { errors: 'Cannot execute action for other users. Your id is different from user_id passed in form' }, status: 400
+    flight = Flight.find(params[:flight_id])
+    if check_flight_seats_number_available(flight, params[:passengers].count).any?
+      render json: { errors: 'There are no more seats available' }, status: 400
       return
     end
     
@@ -20,7 +21,7 @@ class Api::FlightBookingsController < ApiController
     ActiveRecord::Base.transaction do
       params[:passengers].each do |passenger|
         Passenger.create!(
-          user_id: params[:user_id],
+          user_id: current_user.id,
           flight_id: params[:flight_id],
           first_name: passenger[:first_name],
           last_name: passenger[:last_name],
@@ -29,11 +30,15 @@ class Api::FlightBookingsController < ApiController
       end
     end
 
-    flight = Flight.find(params[:flight_id])
-
     render json: flight, serializer: FlightBookingSerializer, status: :ok
 
   rescue ActiveRecord::RecordInvalid
     render json: { errors: 'Something on passenger creation went wrong. Check carefully the data inserted' }, status: 400
+  end
+
+  private
+
+  def check_flight_seats_number_available(flight, passenger_count)
+    return flight.flight_executions.select { |fe| fe.airplane_is_full(passenger_count) }
   end
 end
