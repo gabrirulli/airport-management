@@ -21,6 +21,12 @@ ActiveAdmin.register Flight do
         row :duration do |flight|
           flight.formatted_duration
         end
+        row :number_of_passengers do |flight|
+          flight.passengers.count
+        end
+        row :passengers do |flight|
+          flight.passengers.map { |p| "#{p.first_name} #{p.last_name}" }.join(', ')
+        end
     end
 end
 
