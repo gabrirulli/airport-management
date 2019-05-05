@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Flight, type: :model do
   it 'creates valid flight' do
-    expect(create(:flight)).to be_valid 
+    expect(create(:flight)).to be_valid
   end
 
   describe '#code' do

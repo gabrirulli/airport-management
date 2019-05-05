@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Airplane, type: :model do
   it 'creates valid airplane' do
-    expect(create(:airplane)).to be_valid 
+    expect(create(:airplane)).to be_valid
   end
 
   describe '#code' do
