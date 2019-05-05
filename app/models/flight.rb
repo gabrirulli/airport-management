@@ -3,6 +3,9 @@ class Flight < ApplicationRecord
   has_many :airplanes, through: :flight_executions
   accepts_nested_attributes_for :flight_executions, allow_destroy: true
 
+  has_many :passengers
+  has_many :users, through: :passengers
+
   validates :code, :departure, :destination, presence: true
   validates :code, uniqueness: { case_sensitive: false }
 

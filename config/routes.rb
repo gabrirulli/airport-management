@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   namespace 'api' do
     post 'registration', to: 'registration#create'
     post 'login', to: 'sessions#create'
-    resources :flights, only: [:index, :show]
+    resources :flights, only: [:index, :show] do
+      resources :bookings, controller: 'flight_bookings', except: [:update, :edit, :new]
+    end
   end
 end
