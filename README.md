@@ -1,24 +1,65 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Setup applicazione:
 
-Things you may want to cover:
+* rails db:setup
 
-* Ruby version
+* rails db:seed (viene creato l'utente admin)
 
-* System dependencies
+Per accedere alla dashboard amministrativa, accedere ad '/admin'
 
-* Configuration
+Gli endpoint per l'autenticazione Api sono:
 
-* Database creation
+* '/api/registration'
 
-* Database initialization
+* '/api/login'
 
-* How to run the test suite
+Per la registrazione passare oggetto 'user'
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+{
+  "user": {
+    "email": "admin@example.com",
+    "password": "password"
+  }
+}
+```
 
-* Deployment instructions
+Per il login passare oggetto 'session'
 
-* ...
+```
+{
+  "session": {
+    "email": "admin@example.com",
+    "password": "password"
+  }
+}
+```
+Restituiranno entrambi gli endpoint un token ('remember_token') da poter utilizzare per l'autenticazione delle chiamate
+
+```
+{
+    "email": "admin@example.com",
+    "remember_token": "66f1...",
+}
+```
+
+Per effettuare la prenotazione di volo l'endpoint è '/api/flights/:id/bookings' e passare come parametri l'id del volo ed i passeggeri
+
+```
+{
+	"flight_id": 1,
+	"passengers": [
+		{
+			"first_name": "Pasquale",
+			"last_name": "Catuzzo",
+			"fiscal_code": "RLLGRL95B07A859G"
+		},
+		{
+			"first_name": "Gabriele",
+			"last_name": "Rulli",
+			"fiscal_code": "RLLGRL95B07A858G"
+		}
+	]
+}
+```
