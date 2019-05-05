@@ -44,6 +44,8 @@ Restituiranno entrambi gli endpoint un token ('remember_token') da poter utilizz
 }
 ```
 
+Il token è da utilizzare come Bearer token
+
 Per effettuare la prenotazione di volo l'endpoint è '/api/flights/:id/bookings' e passare come parametri l'id del volo ed i passeggeri
 
 ```
