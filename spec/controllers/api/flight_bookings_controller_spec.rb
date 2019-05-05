@@ -1,15 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Api::FlightBookingsController, type: :controller do
+  before(:each) do
+    @user = create(:user)
+  end
+
   describe 'POST #create' do
     before(:each) do
-      @user = create(:user)
       @flight = create(:flight)
     end
 
     context 'if user is not authenticated' do
       it 'should return error 401' do
-        post :create, params: { flight_id: @flight.id }
+        post :create
         expect(response.status).to eq(401)
       end
     end
@@ -39,6 +42,29 @@ RSpec.describe Api::FlightBookingsController, type: :controller do
             }
           }.to change(@flight.passengers, :count).by(passenger_number)
         end
+      end
+    end
+  end
+
+  describe 'GET #index' do
+    context 'if user is not authenticated' do
+      it 'should return error 401' do
+        get :index
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context 'if user is authenticated' do
+      it 'should return the list of current user flights booked' do
+        sign_in_as(@user) # clearance gem helper
+        flights = create_list(:flight, rand(0..10))
+        flights.each do |flight|
+          flight.passengers << create_list(:passenger, rand(0..3), user: @user, flight: flight)
+        end
+
+        get :index
+
+        assert_equal flights, assigns(:flights)
       end
     end
   end

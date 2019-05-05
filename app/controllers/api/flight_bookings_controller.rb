@@ -1,4 +1,9 @@
 class Api::FlightBookingsController < ApiController
+  def index
+    flights = current_user.flights.uniq
+    render json: flights, each_serializer: FlightBookingSerializer, status: :ok
+  end
+
   def create
     if current_user.id != params[:user_id]
       render json: { errors: 'Cannot execute action for other users. Your id is different from user_id passed in form' }, status: 400
