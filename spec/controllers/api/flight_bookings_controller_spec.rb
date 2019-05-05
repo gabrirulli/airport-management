@@ -68,4 +68,25 @@ RSpec.describe Api::FlightBookingsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #show' do
+    context 'if user is not authenticated' do
+      it 'should return error 401' do
+        get :show
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context 'if user is authenticated' do
+      it 'should return single current user flight booked' do
+        sign_in_as(@user) # clearance gem helper
+        flight = create(:flight)
+        flight.passengers << create_list(:passenger, rand(0..3), user: @user, flight: flight)
+
+        get :show
+
+        assert_equal flight, assigns(:flight)
+      end
+    end
+  end
 end
