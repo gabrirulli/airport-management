@@ -1,6 +1,6 @@
 class Api::RegistrationController < ApiController
-  skip_before_action :require_login
-
+  skip_before_action :authenticate_via_token
+  
   def create
     user = User.new(user_params)
     if user.save

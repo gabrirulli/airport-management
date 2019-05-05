@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   namespace 'api' do
-    post "registration", to: "registration#create"
-    post "login", to: "sessions#create"
+    post 'registration', to: 'registration#create'
+    post 'login', to: 'sessions#create'
+    resources :flights, only: [:index, :show]
   end
 end
