@@ -22,6 +22,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'activeadmin'
 # Authentication
 gem 'devise'
+gem 'clearance'
 
 # Rails console
 gem 'pry'
