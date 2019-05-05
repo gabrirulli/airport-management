@@ -1,5 +1,5 @@
-class FlightSerializer < ActiveModel::Serializer
-  attributes :code, :departure, :destination, :duration, :airplanes
+class FlightsSerializer < ActiveModel::Serializer
+  attributes :id, :code, :departure, :destination, :duration, :airplanes
 
   def airplanes
     object.flight_executions.map { |fe|
