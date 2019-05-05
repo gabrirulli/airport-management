@@ -28,6 +28,9 @@ gem 'clearance'
 gem 'pry'
 gem 'pry-rails'
 
+# API serialization
+gem 'active_model_serializers', '~> 0.10.0'
+
 gem 'rubocop', require: false
 
 group :development, :test do
