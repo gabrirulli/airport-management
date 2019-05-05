@@ -7,9 +7,22 @@ ActiveAdmin.register Flight do
     column :code
     column :departure
     column :destination
-    column :duration
+    column :duration do |flight|
+      flight.formatted_duration
+    end
     actions
   end
+
+  show do |flight|
+    attributes_table do 
+        row :code
+        row :departure
+        row :destination
+        row :duration do |flight|
+          flight.formatted_duration
+        end
+    end
+end
 
   form do |f|
     f.semantic_errors *f.object.errors.keys

@@ -5,4 +5,25 @@ class Flight < ApplicationRecord
 
   validates :code, :departure, :destination, presence: true
   validates :code, uniqueness: { case_sensitive: false }
+
+  before_save :save_duration
+
+  # Return duration formatted in hours and minutes
+  def formatted_duration
+    hours = self.duration / 60
+    minutes = self.duration % 60
+    return "#{hours}h #{minutes}m"
+  end
+
+  private
+  
+  # Save duration of the entire flight in minutes
+  def save_duration
+    # Get first and last flight executions and calculate minutes of flight duration
+    executions = flight_executions.order(departure_date_time: :asc)
+    departure = executions.first.departure_date_time
+    arrival = executions.last.arrival_date_time
+
+    self.duration = (arrival - departure)/60
+  end
 end

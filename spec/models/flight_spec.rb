@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Flight, type: :model do
-  it 'creates valid flight' do
+  it 'is valid with valid attributes' do
     expect(create(:flight)).to be_valid
   end
 
